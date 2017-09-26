@@ -56,7 +56,7 @@ font-2 = siji:pixelsize=10;1
 
 modules-left = i3
 modules-center = date
-modules-right = volume memory cpu battery temperature powermenu
+modules-right = volume memory cpu battery temperature
 
 
 [bar/bottom]

@@ -26,12 +26,20 @@ font pango:DejaVu Sans Mono 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Gaps
+gaps inner 23
+gaps outer -5
+
+# Set kbd layout
+exec --no-startup-id setxkbmap pl, mode "default"       
+
+
 # Start more windows floating.
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Start a terminal
-bindsym $mod+Return exec terminix
+bindsym $mod+Return exec tilix
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -86,7 +94,7 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+g focus child
 
-# switch to workspace
+# Switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -96,9 +104,8 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
 
-# move focused container to workspace
+# Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
@@ -108,7 +115,77 @@ bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
-???BRAKUJE WIERSZY
+
+# Move workspace
+bindsym $mod+0 move workspace to right
+bindsym $mod+Shift+0 move workspace to left
+
+# Scratchpad
+bindsym $mod+grave scratchpad show
+bindsym $mod+Shift+grave move container to scratchpad
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $mod+h resize shrink width 10 px or 10 ppt
+        bindsym $mod+j resize grow height 10 px or 10 ppt
+        bindsym $mod+k resize shrink height 10 px or 10 ppt
+        bindsym $mod+l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start background processes.
+exec --no-startup-id nm-applet
+exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh
+exec --no-startup-id redshift-gtk
+exec --no-startup-id pa-applet
+exec --no-startup-id parcellite
+exec --no-startup-id compton -b
+exec --no-startup-id xautolock -time 10 -locker "~/.i3/locker.sh"
+
+exec_always --no-startup-id ~/.fehbg
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+
+# No title bars. Doesn't play well with compton and MOAR SPACE!
+new_window pixel
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Print screen
+bindsym Print exec escrotum -s '/home/bodolsog/Obrazy/Screenshots/screenshot-%Y%m%d-%H%M_$wx$h.png'
+
+set $Locker ~/.config/i3/locker.sh
+
+# Escape mode
 set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
