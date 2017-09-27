@@ -199,7 +199,7 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+p mode "$mode_system"
+bindsym $mod+Escape mode "$mode_system"
 
 # Session management
 set $mode_session Session (s) save, (r) restore
