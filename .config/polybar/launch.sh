@@ -6,5 +6,6 @@ polybar bottom &
 
 for mon in $MONITOR_LIST; do
 	echo "Launching on monitor $mon"
+	env MONITOR=$mon polybar displacer &
 	env MONITOR=$mon polybar topbar &
 done

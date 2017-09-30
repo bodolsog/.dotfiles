@@ -16,6 +16,7 @@ set $mod Mod4
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 font pango:DejaVu Sans Mono 8
+
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
@@ -29,6 +30,8 @@ floating_modifier $mod
 # Gaps
 gaps inner 23
 gaps outer -5
+
+focus_follows_mouse no
 
 # Set kbd layout
 exec --no-startup-id setxkbmap pl, mode "default"       
@@ -78,6 +81,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+bindysm $mod+Shift+v layout splitv
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -162,7 +166,9 @@ exec --no-startup-id redshift-gtk
 exec --no-startup-id pa-applet
 exec --no-startup-id parcellite
 exec --no-startup-id compton -b
+exec --no-startup-id kalu
 exec --no-startup-id xautolock -time 10 -locker "~/.i3/locker.sh"
+exec /usr/libexec/gnome-settings-daemon
 
 exec_always --no-startup-id ~/.fehbg
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -213,3 +219,11 @@ mode "$mode_session" {
 }
 
 bindsym $mod+i mode "$mode_session"
+
+# For window settings
+for_window [class="Tilix"] floating enable
+for_window [class="Google-chrome"] move to workspace 3
+for_window [class="jetbrains-pycharm"] move to workspace 5
+for_window [class="Rambox"] move to workspace 2
+for_window [class="Hamster"] move to workspace 2
+for_window [class="MellowPlayer"] move to workspace 4
